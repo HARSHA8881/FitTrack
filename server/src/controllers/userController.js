@@ -49,7 +49,12 @@ export const signup = async (req, res) => {
     });
   } catch (error) {
     console.error('Signup error:', error);
-    res.status(500).json({ message: 'Error creating user' });
+    // Handle Prisma unique constraint error on email
+    if (error.code === 'P2002' && Array.isArray(error.meta?.target) && error.meta.target.includes('email')) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
+    // Surface more detail during development to help debugging
+    return res.status(500).json({ message: 'Error creating user', detail: error.message });
   }
 };
 
