@@ -49,12 +49,29 @@ export const signup = async (req, res) => {
     });
   } catch (error) {
     console.error('Signup error:', error);
+    console.error('Error code:', error.code);
+    console.error('Error message:', error.message);
+    console.error('Full error:', JSON.stringify(error, null, 2));
+    
     // Handle Prisma unique constraint error on email
     if (error.code === 'P2002' && Array.isArray(error.meta?.target) && error.meta.target.includes('email')) {
       return res.status(400).json({ message: 'User already exists' });
     }
+    
+    // Handle database connection errors
+    if (error.code === 'P1001' || error.message?.includes('Can\'t reach database server')) {
+      return res.status(500).json({ 
+        message: 'Database connection failed', 
+        detail: 'Please check if MySQL is running and DATABASE_URL is correct' 
+      });
+    }
+    
     // Surface more detail during development to help debugging
-    return res.status(500).json({ message: 'Error creating user', detail: error.message });
+    return res.status(500).json({ 
+      message: 'Error creating user', 
+      detail: error.message,
+      code: error.code 
+    });
   }
 };
 

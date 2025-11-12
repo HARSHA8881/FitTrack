@@ -20,16 +20,19 @@ function Signup() {
       localStorage.setItem('token', response.data.token);
       navigate('/dashboard');
     } catch (err) {
-      setError(err.response?.data?.message || 'Signup failed');
+      const errorMessage = err.response?.data?.message || err.response?.data?.detail || err.message || 'Signup failed';
+      setError(errorMessage);
+      console.error('Signup error:', err.response?.data || err);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="auth-container">
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="auth-page">
+      <div className="auth-container">
+        <h2>Sign Up</h2>
+        <form onSubmit={handleSubmit}>
         <div>
           <label>Name:</label>
           <input
@@ -62,9 +65,10 @@ function Signup() {
           {loading ? 'Signing up...' : 'Sign Up'}
         </button>
       </form>
-      <p>
-        Already have an account? <Link to="/login">Login</Link>
-      </p>
+        <p>
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
+      </div>
     </div>
   );
 }

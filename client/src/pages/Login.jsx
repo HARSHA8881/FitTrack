@@ -26,9 +26,10 @@ function Login() {
   };
 
   return (
-    <div className="auth-container">
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="auth-page">
+      <div className="auth-container">
+        <h2>Login</h2>
+        <form onSubmit={handleSubmit}>
         <div>
           <label>Email:</label>
           <input
@@ -52,9 +53,10 @@ function Login() {
           {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
-      <p>
-        Don't have an account? <Link to="/signup">Sign up</Link>
-      </p>
+        <p>
+          Don't have an account? <Link to="/signup">Sign up</Link>
+        </p>
+      </div>
     </div>
   );
 }
