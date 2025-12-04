@@ -18,6 +18,9 @@ function Navbar() {
         {token ? (
           <>
             <Link to="/dashboard">Dashboard</Link>
+            <Link to="/workouts">Workouts</Link>
+            <Link to="/exercises">Exercises</Link>
+            <Link to="/stats">Stats</Link>
             <button onClick={handleLogout} className="nav-logout">Logout</button>
           </>
         ) : (

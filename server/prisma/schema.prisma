@@ -12,10 +12,38 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
+  name        String
+  email       String    @unique
+  password    String
+  fitnessGoal String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  exercises   Exercise[]
+  workouts    Workout[]
+}
+
+model Exercise {
+  id        Int       @id @default(autoincrement())
   name      String
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  category  String
+  userId    Int?
+  user      User?     @relation(fields: [userId], references: [id])
+  isDefault Boolean   @default(false)
+  workouts  Workout[]
+}
+
+model Workout {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+  exerciseId  Int
+  exercise    Exercise @relation(fields: [exerciseId], references: [id])
+  sets        Int?
+  reps        Int?
+  weight      Float?
+  duration    Int?
+  notes       String?
+  workoutDate DateTime @default(now())
+  createdAt   DateTime @default(now())
 }
