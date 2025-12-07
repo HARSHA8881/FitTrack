@@ -27,13 +27,18 @@ export const getWorkouts = async (req, res) => {
 // Log a new workout
 export const createWorkout = async (req, res) => {
     try {
-        const { exerciseId, sets, reps, weight, duration, notes, workoutDate } = req.body;
+        const { exerciseId, sets, reps, weight, duration, notes, workoutDate, intensity, distance, calories } = req.body;
         const userId = req.user.id;
 
         if (!exerciseId) {
             return res.status(400).json({ message: 'Exercise ID is required' });
         }
 
+        // Import services dynamically to avoid circular dependencies
+        const GamificationService = (await import('../services/gamificationService.js')).default;
+        const AnalyticsService = (await import('../services/analyticsService.js')).default;
+
+        // Create workout
         const workout = await prisma.workout.create({
             data: {
                 userId,
@@ -42,6 +47,9 @@ export const createWorkout = async (req, res) => {
                 reps: reps ? parseInt(reps) : null,
                 weight: weight ? parseFloat(weight) : null,
                 duration: duration ? parseInt(duration) : null,
+                distance: distance ? parseFloat(distance) : null,
+                calories: calories ? parseInt(calories) : null,
+                intensity: intensity || null,
                 notes,
                 workoutDate: workoutDate ? new Date(workoutDate) : new Date()
             },
@@ -50,7 +58,46 @@ export const createWorkout = async (req, res) => {
             }
         });
 
-        res.status(201).json(workout);
+        // Check for personal records
+        const newRecords = await AnalyticsService.checkPersonalRecord(userId, parseInt(exerciseId), workout);
+
+        if (newRecords.length > 0) {
+            // Update workout to mark as PR
+            await prisma.workout.update({
+                where: { id: workout.id },
+                data: { isPersonalRecord: true }
+            });
+            workout.isPersonalRecord = true;
+        }
+
+        // Calculate and award XP
+        const xpData = await GamificationService.calculateWorkoutXP(workout);
+        const xpResult = await GamificationService.awardXP(userId, xpData, 'workout');
+
+        // Update streak
+        const streakResult = await GamificationService.updateStreak(userId);
+
+        // Check for new achievements
+        const newAchievements = await GamificationService.checkAchievements(userId);
+
+        // Update workout with XP earned
+        await prisma.workout.update({
+            where: { id: workout.id },
+            data: {
+                xpEarned: xpData,
+                pointsEarned: xpData
+            }
+        });
+
+        res.status(201).json({
+            workout,
+            gamification: {
+                xp: xpResult,
+                streak: streakResult,
+                newAchievements,
+                personalRecords: newRecords
+            }
+        });
     } catch (error) {
         console.error('Create workout error:', error);
         res.status(500).json({ message: 'Error logging workout' });

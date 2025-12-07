@@ -5,6 +5,9 @@ import authRoutes from './routes/auth.js';
 import exerciseRoutes from './routes/exercises.js';
 import workoutRoutes from './routes/workouts.js';
 import statsRoutes from './routes/stats.js';
+import achievementRoutes from './routes/achievements.js';
+import templateRoutes from './routes/templates.js';
+import userRoutes from './routes/users.js';
 
 dotenv.config();
 
@@ -21,6 +24,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/exercises', exerciseRoutes);
 app.use('/api/workouts', workoutRoutes);
 app.use('/api/stats', statsRoutes);
+app.use('/api/achievements', achievementRoutes);
+app.use('/api/templates', templateRoutes);
+app.use('/api/users', userRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

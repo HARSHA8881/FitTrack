@@ -1,49 +1,371 @@
-
 generator client {
   provider = "prisma-client-js"
   binaryTargets = ["native", "debian-openssl-3.0.x"] 
 }
 
-
-
 datasource db {
-  provider  = "mysql"
-  url       = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"  // Required for PlanetScale - handles foreign keys in Prisma instead of database
 }
 
+// ============================================
+// USER MODEL - Enhanced with gamification
+// ============================================
 model User {
-  id          Int       @id @default(autoincrement())
-  name        String
-  email       String    @unique
-  password    String
-  fitnessGoal String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  exercises   Exercise[]
-  workouts    Workout[]
+  id                Int                @id @default(autoincrement())
+  name              String
+  email             String             @unique
+  password          String
+  avatar            String?
+  bio               String?            @db.Text
+  fitnessGoal       String?
+  experienceLevel   String?            // beginner, intermediate, advanced
+  
+  // Gamification
+  level             Int                @default(1)
+  xp                Int                @default(0)
+  totalPoints       Int                @default(0)
+  currentStreak     Int                @default(0)
+  longestStreak     Int                @default(0)
+  lastWorkoutDate   DateTime?
+  
+  // Preferences
+  preferredUnits    String             @default("metric") // metric, imperial
+  weeklyGoal        Int                @default(3)        // workouts per week
+  isPublic          Boolean            @default(false)
+  
+  // Timestamps
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  
+  // Relations
+  exercises         Exercise[]
+  workouts          Workout[]
+  achievements      UserAchievement[]
+  personalRecords   PersonalRecord[]
+  templates         WorkoutTemplate[]
+  followers         Follow[]           @relation("UserFollowers")
+  following         Follow[]           @relation("UserFollowing")
+  posts             SocialPost[]
+  likes             PostLike[]
+  comments          PostComment[]
+  challenges        ChallengeParticipant[]
+  aiInsights        AIInsight[]
+  goals             Goal[]
+  bodyMetrics       BodyMetric[]
 }
 
+// ============================================
+// EXERCISE MODEL - Enhanced with metadata
+// ============================================
 model Exercise {
-  id        Int       @id @default(autoincrement())
-  name      String
-  category  String
-  userId    Int?
-  user      User?     @relation(fields: [userId], references: [id])
-  isDefault Boolean   @default(false)
-  workouts  Workout[]
+  id              Int               @id @default(autoincrement())
+  name            String
+  category        String            // strength, cardio, flexibility, sports
+  muscleGroup     String?           // chest, back, legs, arms, core, full-body
+  difficulty      String?           // beginner, intermediate, advanced
+  equipment       String?           // bodyweight, dumbbells, barbell, machine, etc.
+  description     String?           @db.Text
+  instructions    String?           @db.Text
+  videoUrl        String?
+  imageUrl        String?
+  caloriesPerMin  Float?
+  
+  userId          Int?
+  user            User?             @relation(fields: [userId], references: [id])
+  isDefault       Boolean           @default(false)
+  
+  createdAt       DateTime          @default(now())
+  
+  // Relations
+  workouts        Workout[]
+  personalRecords PersonalRecord[]
+  templateExercises TemplateExercise[]
 }
 
+// ============================================
+// WORKOUT MODEL - Enhanced tracking
+// ============================================
 model Workout {
-  id          Int      @id @default(autoincrement())
-  userId      Int
-  user        User     @relation(fields: [userId], references: [id])
-  exerciseId  Int
-  exercise    Exercise @relation(fields: [exerciseId], references: [id])
-  sets        Int?
-  reps        Int?
-  weight      Float?
-  duration    Int?
-  notes       String?
-  workoutDate DateTime @default(now())
-  createdAt   DateTime @default(now())
+  id              Int               @id @default(autoincrement())
+  userId          Int
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exerciseId      Int
+  exercise        Exercise          @relation(fields: [exerciseId], references: [id])
+  
+  // Workout data
+  sets            Int?
+  reps            Int?
+  weight          Float?
+  duration        Int?              // minutes
+  distance        Float?            // km or miles
+  calories        Int?
+  heartRate       Int?              // average BPM
+  intensity       String?           // low, medium, high
+  notes           String?           @db.Text
+  
+  // Metadata
+  workoutDate     DateTime          @default(now())
+  completedAt     DateTime?
+  rating          Int?              // 1-5 stars
+  mood            String?           // energized, tired, motivated, etc.
+  
+  // Gamification
+  xpEarned        Int               @default(0)
+  pointsEarned    Int               @default(0)
+  isPersonalRecord Boolean          @default(false)
+  
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+}
+
+// ============================================
+// PERSONAL RECORDS - Track PRs
+// ============================================
+model PersonalRecord {
+  id              Int               @id @default(autoincrement())
+  userId          Int
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exerciseId      Int
+  exercise        Exercise          @relation(fields: [exerciseId], references: [id])
+  
+  recordType      String            // max_weight, max_reps, max_distance, fastest_time
+  value           Float
+  unit            String            // kg, lbs, km, miles, minutes
+  achievedAt      DateTime          @default(now())
+  
+  @@unique([userId, exerciseId, recordType])
+}
+
+// ============================================
+// ACHIEVEMENTS - Gamification badges
+// ============================================
+model Achievement {
+  id              Int               @id @default(autoincrement())
+  name            String
+  description     String            @db.Text
+  icon            String
+  category        String            // workout, streak, social, milestone
+  requirement     String            // JSON string with requirements
+  xpReward        Int               @default(0)
+  pointsReward    Int               @default(0)
+  rarity          String            @default("common") // common, rare, epic, legendary
+  
+  createdAt       DateTime          @default(now())
+  
+  // Relations
+  users           UserAchievement[]
+}
+
+model UserAchievement {
+  id              Int               @id @default(autoincrement())
+  userId          Int
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievementId   Int
+  achievement     Achievement       @relation(fields: [achievementId], references: [id])
+  
+  unlockedAt      DateTime          @default(now())
+  
+  @@unique([userId, achievementId])
+}
+
+// ============================================
+// WORKOUT TEMPLATES - Reusable routines
+// ============================================
+model WorkoutTemplate {
+  id              Int               @id @default(autoincrement())
+  userId          Int
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  name            String
+  description     String?           @db.Text
+  category        String?           // strength, cardio, hiit, yoga, etc.
+  difficulty      String?
+  estimatedTime   Int?              // minutes
+  isPublic        Boolean           @default(false)
+  usageCount      Int               @default(0)
+  
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  
+  // Relations
+  exercises       TemplateExercise[]
+}
+
+model TemplateExercise {
+  id              Int               @id @default(autoincrement())
+  templateId      Int
+  template        WorkoutTemplate   @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  exerciseId      Int
+  exercise        Exercise          @relation(fields: [exerciseId], references: [id])
+  
+  order           Int               @default(0)
+  sets            Int?
+  reps            Int?
+  duration        Int?
+  restTime        Int?              // seconds
+  notes           String?
+}
+
+// ============================================
+// SOCIAL FEATURES - Community engagement
+// ============================================
+model Follow {
+  id              Int               @id @default(autoincrement())
+  followerId      Int
+  follower        User              @relation("UserFollowing", fields: [followerId], references: [id], onDelete: Cascade)
+  followingId     Int
+  following       User              @relation("UserFollowers", fields: [followingId], references: [id], onDelete: Cascade)
+  
+  createdAt       DateTime          @default(now())
+  
+  @@unique([followerId, followingId])
+}
+
+model SocialPost {
+  id              Int               @id @default(autoincrement())
+  userId          Int
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  content         String            @db.Text
+  imageUrl        String?
+  workoutData     String?           @db.Text // JSON string
+  postType        String            @default("general") // general, workout, achievement, pr
+  
+  likesCount      Int               @default(0)
+  commentsCount   Int               @default(0)
+  
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  
+  // Relations
+  likes           PostLike[]
+  comments        PostComment[]
+}
+
+model PostLike {
+  id              Int               @id @default(autoincrement())
+  userId          Int
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId          Int
+  post            SocialPost        @relation(fields: [postId], references: [id], onDelete: Cascade)
+  
+  createdAt       DateTime          @default(now())
+  
+  @@unique([userId, postId])
+}
+
+model PostComment {
+  id              Int               @id @default(autoincrement())
+  userId          Int
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId          Int
+  post            SocialPost        @relation(fields: [postId], references: [id], onDelete: Cascade)
+  
+  content         String            @db.Text
+  
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+}
+
+// ============================================
+// CHALLENGES - Competitive features
+// ============================================
+model Challenge {
+  id              Int               @id @default(autoincrement())
+  name            String
+  description     String            @db.Text
+  challengeType   String            // workout_count, total_duration, specific_exercise, streak
+  goal            Float             // target value
+  unit            String?           // workouts, minutes, kg, etc.
+  
+  startDate       DateTime
+  endDate         DateTime
+  
+  xpReward        Int               @default(0)
+  pointsReward    Int               @default(0)
+  
+  createdAt       DateTime          @default(now())
+  
+  // Relations
+  participants    ChallengeParticipant[]
+}
+
+model ChallengeParticipant {
+  id              Int               @id @default(autoincrement())
+  userId          Int
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  challengeId     Int
+  challenge       Challenge         @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  
+  progress        Float             @default(0)
+  completed       Boolean           @default(false)
+  completedAt     DateTime?
+  
+  joinedAt        DateTime          @default(now())
+  
+  @@unique([userId, challengeId])
+}
+
+// ============================================
+// GOALS - User fitness goals
+// ============================================
+model Goal {
+  id              Int               @id @default(autoincrement())
+  userId          Int
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  title           String
+  description     String?           @db.Text
+  goalType        String            // weight_loss, muscle_gain, strength, endurance, flexibility
+  targetValue     Float?
+  currentValue    Float?
+  unit            String?           // kg, lbs, reps, minutes, etc.
+  targetDate      DateTime?
+  status          String            @default("active") // active, completed, abandoned
+  
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  completedAt     DateTime?
+}
+
+// ============================================
+// BODY METRICS - Track body composition
+// ============================================
+model BodyMetric {
+  id              Int               @id @default(autoincrement())
+  userId          Int
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  metricType      String            // weight, body_fat, muscle_mass, chest, waist, hips, arms, thighs, etc.
+  value           Float
+  unit            String            // kg, lbs, cm, inches, percentage
+  notes           String?           @db.Text
+  recordedAt      DateTime          @default(now())
+  
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  
+  @@index([userId, metricType, recordedAt])
+}
+
+// ============================================
+// AI INSIGHTS - Personalized recommendations
+// ============================================
+model AIInsight {
+  id              Int               @id @default(autoincrement())
+  userId          Int
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  insightType     String            // recommendation, analysis, warning, achievement
+  title           String
+  content         String            @db.Text
+  data            String?           @db.Text // JSON data
+  priority        String            @default("medium") // low, medium, high
+  
+  isRead          Boolean           @default(false)
+  
+  createdAt       DateTime          @default(now())
+  expiresAt       DateTime?
 }
