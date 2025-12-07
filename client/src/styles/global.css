@@ -1,38 +1,83 @@
-/* ============================================
-   FITTRACK - GLOBAL STYLES
-   Simple CSS for Fitness Tracking App
-   ============================================ */
+/* FitTrack Styles - Built with ☕ and determination */
 
-/* Import Fonts from Google */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap');
 
-/* ============================================
-   COLOR PALETTE
-   Reusable color values used throughout the app
-   ============================================ */
+/* Main theme colors - dark mode because it's cooler */
 :root {
-    /* Main Brand Colors - Vibrant accents for dark theme */
+    /* Blues - main brand color */
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+    --primary-light: #60a5fa;
+
+    /* Purple accents - for that extra pop */
+    --accent: #a855f7;
+    --accent-dark: #9333ea;
+
+    /* Backgrounds - keeping it dark */
+    --bg: #000;
+    --bg-card: #0a0a0a;
+    --bg-hover: #111;
+    --bg-subtle: #1a1a1a;
+
+    /* Text colors */
+    --text: #f8fafc;
+    --text-muted: #94a3b8;
+    --text-subtle: #64748b;
+
+    /* Borders */
+    --border: #1e293b;
+    --border-light: #1a1a1a;
+
+    /* Status colors */
+    --green: #22c55e;
+    --green-bg: #0f2417;
+    --yellow: #fbbf24;
+    --yellow-bg: #2d1f0a;
+    --red: #ef4444;
+    --red-bg: #2d0f0f;
+
+    /* Spacing - using slightly odd numbers for that handmade feel */
+    --space-xs: 6px;
+    --space-sm: 10px;
+    --space-md: 14px;
+    --space-lg: 18px;
+    --space-xl: 26px;
+    --space-2xl: 34px;
+
+    /* Border radius - not too perfect */
+    --radius: 10px;
+    --radius-sm: 7px;
+    --radius-lg: 14px;
+    --radius-xl: 18px;
+
+    /* Fonts */
+    --font-body: 'Inter', -apple-system, system-ui, sans-serif;
+    --font-display: 'Outfit', -apple-system, system-ui, sans-serif;
+
+    /* Sidebar */
+    --sidebar-width: 245px;
+
+    /* Shadows - subtle but noticeable */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
+    --shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.6);
+
+    /* Transitions */
+    --transition: 200ms ease;
+    --transition-slow: 300ms ease;
+
+    /* Old variable names for compatibility - TODO: clean these up later */
     --primary-color: #3b82f6;
     --primary-light: #1e293b;
     --primary-dark: #60a5fa;
-
-    /* Secondary Colors - Purple accent */
     --secondary-color: #a855f7;
-
-    /* Background Colors - Pure black theme */
     --bg-main: #000000;
     --bg-white: #0a0a0a;
     --bg-gray: #111111;
-
-    /* Text Colors - Light colors for dark background */
     --text-dark: #f8fafc;
     --text-gray: #94a3b8;
     --text-light: #64748b;
-
-    /* Border Colors - Subtle borders for dark theme */
     --border-color: #1e293b;
-
-    /* Status Colors - Vibrant for visibility */
     --success-color: #22c55e;
     --success-bg: #0f2417;
     --warning-color: #fbbf24;
@@ -41,8 +86,6 @@
     --error-bg: #2d0f0f;
     --info-color: #3b82f6;
     --info-bg: #0f1729;
-
-    /* Spacing Values */
     --spacing-xs: 4px;
     --spacing-sm: 8px;
     --spacing-md: 12px;
@@ -50,19 +93,13 @@
     --spacing-xl: 24px;
     --spacing-2xl: 32px;
     --spacing-3xl: 48px;
-
-    /* Border Radius */
     --radius-sm: 6px;
     --radius-md: 8px;
     --radius-lg: 12px;
     --radius-xl: 16px;
     --radius-full: 9999px;
-
-    /* Fonts */
     --font-main: 'Inter', sans-serif;
     --font-heading: 'Outfit', sans-serif;
-
-    /* Font Sizes */
     --text-xs: 12px;
     --text-sm: 14px;
     --text-base: 16px;
@@ -71,15 +108,6 @@
     --text-2xl: 24px;
     --text-3xl: 30px;
     --text-4xl: 36px;
-
-    /* Sidebar */
-    --sidebar-width: 240px;
-
-    /* ============================================
-     BACKWARD COMPATIBILITY ALIASES
-     These map old variable names to new ones
-     ============================================ */
-    /* Primary Color Variants - Adjusted for dark theme */
     --primary-50: #0f1729;
     --primary-100: #1e293b;
     --primary-200: #1e3a5f;
@@ -88,13 +116,9 @@
     --primary-500: #60a5fa;
     --primary-600: #93c5fd;
     --primary-700: #bfdbfe;
-
-    /* Secondary Color Variants */
     --secondary-400: #a855f7;
     --secondary-500: #c084fc;
     --secondary-600: #d8b4fe;
-
-    /* Gray Scale - Inverted for dark theme */
     --gray-50: #0a0a0a;
     --gray-100: #111111;
     --gray-200: #1a1a1a;
@@ -105,23 +129,15 @@
     --gray-700: #a3a3a3;
     --gray-800: #d4d4d4;
     --gray-900: #f5f5f5;
-
-    /* Background Aliases */
     --bg-primary: #000000;
     --bg-secondary: #0a0a0a;
     --bg-tertiary: #111111;
-
-    /* Text Aliases */
     --text-primary: #f8fafc;
     --text-secondary: #94a3b8;
     --text-tertiary: #64748b;
-
-    /* Border Aliases */
     --border-default: #1e293b;
     --border-light: #1a1a1a;
     --border-strong: #334155;
-
-    /* Status Color Aliases */
     --success: #22c55e;
     --success-light: #0f2417;
     --warning: #fbbf24;
@@ -130,8 +146,6 @@
     --error-light: #2d0f0f;
     --info: #3b82f6;
     --info-light: #0f1729;
-
-    /* Spacing Aliases (old names) */
     --space-1: 4px;
     --space-2: 8px;
     --space-3: 12px;
@@ -142,22 +156,14 @@
     --space-10: 40px;
     --space-12: 48px;
     --space-16: 64px;
-
-    /* Border Radius Aliases */
     --radius-2xl: 24px;
-
-    /* Font Aliases */
     --font-primary: 'Inter', sans-serif;
-
-    /* Shadow Values - Enhanced for dark theme with glow effects */
     --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
     --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.6), 0 1px 2px -1px rgba(0, 0, 0, 0.6);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.6), 0 2px 4px -2px rgba(0, 0, 0, 0.6);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.7), 0 4px 6px -4px rgba(0, 0, 0, 0.7);
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.8), 0 8px 10px -6px rgba(0, 0, 0, 0.8);
     --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.9);
-
-    /* Transition Values */
     --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -168,28 +174,47 @@
    Activated when data-theme="light"
    ============================================ */
 [data-theme="light"] {
-    /* Main Brand Colors - Clean Blue/Teal */
+    /* New simplified variables for light theme */
+    --primary: #0ea5e9;
+    --primary-hover: #0284c7;
+    --primary-light: #38bdf8;
+    --accent: #8b5cf6;
+    --accent-dark: #7c3aed;
+
+    --bg: #ffffff;
+    --bg-card: #ffffff;
+    --bg-hover: #f8fafc;
+    --bg-subtle: #f1f5f9;
+
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --text-subtle: #94a3b8;
+
+    --border: #e2e8f0;
+    --border-light: #f1f5f9;
+
+    --green: #10b981;
+    --green-bg: #d1fae5;
+    --yellow: #f59e0b;
+    --yellow-bg: #fef3c7;
+    --red: #ef4444;
+    --red-bg: #fee2e2;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    /* Old variable names for compatibility */
     --primary-color: #0ea5e9;
-    --primary-light: #e0f2fe;
     --primary-dark: #0284c7;
-
-    /* Secondary Colors - Purple accent */
     --secondary-color: #8b5cf6;
-
-    /* Background Colors - Clean whites and grays */
     --bg-main: #ffffff;
     --bg-white: #ffffff;
     --bg-gray: #f8fafc;
-
-    /* Text Colors - Black and grays */
     --text-dark: #0f172a;
     --text-gray: #64748b;
     --text-light: #94a3b8;
-
-    /* Border Colors */
     --border-color: #e2e8f0;
-
-    /* Status Colors */
     --success-color: #10b981;
     --success-bg: #d1fae5;
     --warning-color: #f59e0b;
@@ -260,9 +285,8 @@
     --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
-/* ============================================
-   RESET & BASE STYLES
-   ============================================ */
+
+/* Basic resets */
 * {
     margin: 0;
     padding: 0;
@@ -274,75 +298,71 @@ html {
 }
 
 body {
-    font-family: var(--font-main);
-    font-size: var(--text-base);
-    line-height: 1.6;
-    color: var(--text-dark);
-    background: var(--bg-main);
-    margin: 0;
-    padding: 0;
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
 }
 
 #root {
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
 }
 
-/* ============================================
-   TYPOGRAPHY
-   ============================================ */
+/* Headings */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-    font-family: var(--font-heading);
+    font-family: var(--font-display);
     font-weight: 700;
     line-height: 1.2;
-    color: var(--text-dark);
-    margin-bottom: var(--spacing-lg);
+    color: var(--text);
+    margin-bottom: 16px;
 }
 
 h1 {
-    font-size: var(--text-4xl);
+    font-size: 36px;
 }
 
 h2 {
-    font-size: var(--text-3xl);
+    font-size: 28px;
 }
 
 h3 {
-    font-size: var(--text-2xl);
+    font-size: 22px;
 }
 
 h4 {
-    font-size: var(--text-xl);
+    font-size: 19px;
 }
 
 h5 {
-    font-size: var(--text-lg);
+    font-size: 17px;
 }
 
 h6 {
-    font-size: var(--text-base);
+    font-size: 16px;
 }
 
 p {
-    margin-bottom: var(--spacing-lg);
-    color: var(--text-gray);
+    margin-bottom: 14px;
+    color: var(--text-muted);
 }
 
 a {
-    color: var(--primary-color);
+    color: var(--primary);
     text-decoration: none;
-    transition: color 0.25s;
+    transition: var(--transition);
 }
 
 a:hover {
-    color: var(--primary-dark);
+    color: var(--primary-light);
 }
+
 
 /* ============================================
    LAYOUT
@@ -354,6 +374,13 @@ a:hover {
 
 .app-main {
     flex: 1;
+    background: var(--bg-main);
+    min-height: 100vh;
+}
+
+.app-full {
+    flex: 1;
+    width: 100%;
     background: var(--bg-main);
     min-height: 100vh;
 }
@@ -619,22 +646,21 @@ a:hover {
     color: white;
 }
 
-/* ============================================
-   BUTTONS
-   ============================================ */
+
+/* Buttons - the fun part */
 .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-md) var(--spacing-xl);
-    border-radius: var(--radius-lg);
-    font-family: var(--font-main);
-    font-size: var(--text-sm);
+    gap: 8px;
+    padding: 11px 22px;
+    border-radius: var(--radius);
+    font-family: var(--font-body);
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     border: none;
-    transition: all 0.25s;
+    transition: var(--transition);
     text-decoration: none;
 }
 
@@ -644,107 +670,106 @@ a:hover {
 }
 
 .btn-primary {
-    background: var(--primary-color);
+    background: var(--primary);
     color: white;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-primary:hover:not(:disabled) {
-    background: var(--primary-dark);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: var(--primary-hover);
+    box-shadow: var(--shadow);
     transform: translateY(-1px);
 }
 
 .btn-secondary {
-    background: var(--bg-white);
-    color: var(--text-dark);
-    border: 1px solid var(--border-color);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    background: var(--bg-card);
+    color: var(--text);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-secondary:hover:not(:disabled) {
-    background: var(--bg-gray);
+    background: var(--bg-hover);
+    border-color: var(--primary);
 }
 
 .btn-ghost {
     background: transparent;
-    color: var(--text-gray);
+    color: var(--text-muted);
 }
 
 .btn-ghost:hover:not(:disabled) {
-    background: var(--bg-gray);
-    color: var(--text-dark);
+    background: var(--bg-hover);
+    color: var(--text);
 }
 
 .btn-sm {
-    padding: var(--spacing-sm) var(--spacing-lg);
-    font-size: var(--text-xs);
+    padding: 7px 16px;
+    font-size: 13px;
 }
 
 .btn-lg {
-    padding: var(--spacing-lg) var(--spacing-xl);
-    font-size: var(--text-base);
+    padding: 14px 28px;
+    font-size: 16px;
 }
 
-/* ============================================
-   CARDS
-   ============================================ */
+
+
+/* Cards */
 .card {
-    background: var(--bg-white);
-    border-radius: var(--radius-xl);
-    border: 1px solid var(--border-color);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
     overflow: hidden;
-    transition: all 0.25s;
+    transition: var(--transition);
 }
 
 .card:hover {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow);
 }
 
 .card-header {
-    padding: var(--spacing-xl);
-    border-bottom: 1px solid var(--border-color);
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
 }
 
 .card-title {
-    font-family: var(--font-heading);
-    font-size: var(--text-lg);
+    font-family: var(--font-display);
+    font-size: 18px;
     font-weight: 700;
-    color: var(--text-dark);
-    margin-bottom: var(--spacing-xs);
+    color: var(--text);
+    margin-bottom: 4px;
 }
 
 .card-description {
-    font-size: var(--text-sm);
-    color: var(--text-gray);
+    font-size: 14px;
+    color: var(--text-muted);
     margin-bottom: 0;
 }
 
 .card-body {
-    padding: var(--spacing-xl);
+    padding: 20px;
 }
 
 .card-footer {
-    padding: var(--spacing-xl);
-    border-top: 1px solid var(--border-color);
-    background: var(--bg-gray);
+    padding: 20px;
+    border-top: 1px solid var(--border);
+    background: var(--bg-hover);
 }
 
-/* ============================================
-   STAT CARDS
-   ============================================ */
+/* Stat cards - for dashboard */
 .stat-card {
-    background: var(--bg-white);
-    border-radius: var(--radius-xl);
-    border: 1px solid var(--border-color);
-    padding: var(--spacing-xl);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: all 0.25s;
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    padding: 22px;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
 }
 
 .stat-card:hover {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow);
     transform: translateY(-2px);
 }
 
@@ -752,171 +777,171 @@ a:hover {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: 16px;
 }
 
 .stat-card-title {
-    font-size: var(--text-sm);
+    font-size: 14px;
     font-weight: 500;
-    color: var(--text-gray);
+    color: var(--text-muted);
     margin-bottom: 0;
 }
 
 .stat-card-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: var(--radius-lg);
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .stat-card-icon.primary {
-    background: var(--primary-light);
-    color: var(--primary-dark);
+    background: var(--info-bg);
+    color: var(--primary);
 }
 
 .stat-card-icon.secondary {
     background: var(--info-bg);
-    color: var(--info-color);
+    color: var(--accent);
 }
 
 .stat-card-icon.success {
-    background: var(--success-bg);
-    color: var(--success-color);
+    background: var(--green-bg);
+    color: var(--green);
 }
 
 .stat-card-icon.warning {
-    background: var(--warning-bg);
-    color: var(--warning-color);
+    background: var(--yellow-bg);
+    color: var(--yellow);
 }
 
 .stat-card-value {
-    font-family: var(--font-heading);
-    font-size: var(--text-3xl);
+    font-family: var(--font-display);
+    font-size: 32px;
     font-weight: 800;
-    color: var(--text-dark);
-    margin-bottom: var(--spacing-sm);
+    color: var(--text);
+    margin-bottom: 8px;
     line-height: 1;
 }
 
 .stat-card-change {
     display: flex;
     align-items: center;
-    gap: var(--spacing-xs);
-    font-size: var(--text-sm);
+    gap: 4px;
+    font-size: 14px;
     font-weight: 500;
 }
 
 .stat-card-change.positive {
-    color: var(--success-color);
+    color: var(--green);
 }
 
 .stat-card-change.negative {
-    color: var(--error-color);
+    color: var(--red);
 }
 
 .stat-card-change.neutral {
-    color: var(--text-light);
+    color: var(--text-subtle);
 }
 
-/* ============================================
-   FORMS
-   ============================================ */
+
+
+
+/* Forms */
 .form-group {
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: 22px;
 }
 
 .form-label {
     display: block;
-    font-size: var(--text-sm);
+    font-size: 15px;
     font-weight: 600;
-    color: var(--text-dark);
-    margin-bottom: var(--spacing-sm);
+    color: var(--text);
+    margin-bottom: 9px;
 }
 
 .form-input,
 .form-select,
 .form-textarea {
     width: 100%;
-    padding: var(--spacing-md) var(--spacing-lg);
-    font-family: var(--font-main);
-    font-size: var(--text-sm);
-    color: var(--text-dark);
-    background: var(--bg-white);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-lg);
-    transition: all 0.25s;
+    padding: 13px 16px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--text);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: var(--transition);
 }
 
 .form-input:focus,
 .form-select:focus,
 .form-textarea:focus {
     outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px var(--primary-light);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 .form-input::placeholder,
 .form-textarea::placeholder {
-    color: var(--text-light);
+    color: var(--text-subtle);
 }
 
 .form-textarea {
     resize: vertical;
-    min-height: 100px;
+    min-height: 110px;
 }
 
 .form-helper {
-    font-size: var(--text-xs);
-    color: var(--text-light);
-    margin-top: var(--spacing-xs);
+    font-size: 13px;
+    color: var(--text-subtle);
+    margin-top: 6px;
 }
 
 .form-error {
-    font-size: var(--text-xs);
-    color: var(--error-color);
-    margin-top: var(--spacing-xs);
+    font-size: 13px;
+    color: var(--red);
+    margin-top: 6px;
 }
 
-/* ============================================
-   BADGES
-   ============================================ */
+/* Badges - small labels */
 .badge {
     display: inline-flex;
     align-items: center;
-    gap: var(--spacing-xs);
-    padding: var(--spacing-xs) var(--spacing-md);
-    font-size: var(--text-xs);
+    gap: 4px;
+    padding: 4px 10px;
+    font-size: 12px;
     font-weight: 600;
-    border-radius: var(--radius-full);
+    border-radius: 20px;
     line-height: 1;
 }
 
 .badge-primary {
-    background: var(--primary-light);
-    color: var(--primary-dark);
+    background: var(--info-bg);
+    color: var(--primary);
 }
 
 .badge-secondary {
-    background: var(--info-bg);
-    color: var(--info-color);
+    background: rgba(168, 85, 247, 0.1);
+    color: var(--accent);
 }
 
 .badge-success {
-    background: var(--success-bg);
-    color: var(--success-color);
+    background: var(--green-bg);
+    color: var(--green);
 }
 
 .badge-warning {
-    background: var(--warning-bg);
-    color: var(--warning-color);
+    background: var(--yellow-bg);
+    color: var(--yellow);
 }
 
 .badge-error {
-    background: var(--error-bg);
-    color: var(--error-color);
+    background: var(--red-bg);
+    color: var(--red);
 }
+
 
 .badge-gray {
     background: #f3f4f6;
@@ -1069,15 +1094,16 @@ a:hover {
 
 .hero-section {
     position: relative;
-    min-height: 600px;
+    min-height: 85vh;
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     overflow: hidden;
-    padding: var(--spacing-3xl);
+    padding: 60px 40px;
 }
+
 
 .hero-background {
     position: absolute;
@@ -1166,45 +1192,50 @@ a:hover {
 /* ============================================
    AUTH PAGES
    ============================================ */
+/* Auth pages - login/signup */
 .auth-page {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    padding: var(--spacing-xl);
+    padding: 20px;
+    width: 100%;
 }
 
 .auth-container {
-    background: var(--bg-white);
-    border-radius: var(--radius-xl);
-    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
-    padding: var(--spacing-3xl);
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: 50px 45px;
     width: 100%;
-    max-width: 450px;
+    max-width: 520px;
     position: relative;
     z-index: 1;
+    margin: 0 auto;
 }
 
 .auth-header {
     text-align: center;
-    margin-bottom: var(--spacing-2xl);
+    margin-bottom: 35px;
 }
 
 .auth-header h2 {
-    font-size: var(--text-2xl);
-    margin-bottom: var(--spacing-sm);
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: var(--text);
 }
 
 .auth-header p {
-    color: var(--text-gray);
+    color: var(--text-muted);
     margin-bottom: 0;
+    font-size: 16px;
 }
 
 .auth-divider {
     position: relative;
     text-align: center;
-    margin: var(--spacing-xl) 0;
+    margin: 28px 0;
 }
 
 .auth-divider::before {
@@ -1214,31 +1245,37 @@ a:hover {
     left: 0;
     right: 0;
     height: 1px;
-    background: var(--border-color);
+    background: var(--border);
 }
 
 .auth-divider span {
     position: relative;
-    background: var(--bg-white);
-    padding: 0 var(--spacing-lg);
-    color: var(--text-light);
-    font-size: var(--text-sm);
+    background: var(--bg-card);
+    padding: 0 14px;
+    color: var(--text-muted);
+    font-size: 14px;
 }
 
 .auth-footer {
     text-align: center;
-    margin-top: var(--spacing-xl);
+    margin-top: 24px;
 }
 
 .auth-footer p {
-    font-size: var(--text-sm);
-    color: var(--text-gray);
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
 }
 
 .auth-footer a {
-    color: var(--primary-color);
+    color: var(--primary);
     font-weight: 600;
 }
+
+.auth-footer a:hover {
+    color: var(--primary-light);
+}
+
 
 /* ============================================
    LOADING SPINNER

@@ -23,7 +23,7 @@ function AppLayout() {
   return (
     <div className="app-layout">
       {showSidebar && <Sidebar />}
-      <div className={showSidebar ? 'app-main' : ''} style={{ marginLeft: showSidebar ? 'var(--sidebar-width)' : 0 }}>
+      <div className={showSidebar ? 'app-main' : 'app-full'} style={{ marginLeft: showSidebar ? 'var(--sidebar-width)' : 0 }}>
         <Routes>
           <Route path="/" element={token ? <Navigate to="/dashboard" replace /> : <Landing />} />
           <Route path="/login" element={<Login />} />

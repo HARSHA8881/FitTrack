@@ -49,24 +49,24 @@ function Signup() {
 
       <div className="auth-container">
         {/* Logo/Brand */}
-        <div style={{ textAlign: 'center', marginBottom: 'var(--space-6)' }}>
+        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
           <div style={{
             width: '64px',
             height: '64px',
-            background: 'linear-gradient(135deg, var(--primary-400) 0%, var(--primary-600) 100%)',
-            borderRadius: 'var(--radius-xl)',
+            background: 'linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%)',
+            borderRadius: 'var(--radius-lg)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            margin: '0 auto var(--space-4)'
+            margin: '0 auto 16px'
           }}>
             <Dumbbell size={32} style={{ color: 'white' }} />
           </div>
           <h1 style={{
-            fontFamily: 'var(--font-heading)',
-            fontSize: 'var(--text-2xl)',
+            fontFamily: 'var(--font-display)',
+            fontSize: '24px',
             fontWeight: 800,
-            background: 'linear-gradient(135deg, var(--primary-400) 0%, var(--secondary-400) 100%)',
+            background: 'linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             marginBottom: 0
@@ -83,7 +83,7 @@ function Signup() {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label className="form-label">
-              <User size={16} style={{ display: 'inline-block', marginRight: 'var(--space-2)', verticalAlign: 'middle' }} />
+              <User size={16} style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }} />
               Full Name
             </label>
             <input
@@ -99,7 +99,7 @@ function Signup() {
 
           <div className="form-group">
             <label className="form-label">
-              <Mail size={16} style={{ display: 'inline-block', marginRight: 'var(--space-2)', verticalAlign: 'middle' }} />
+              <Mail size={16} style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }} />
               Email Address
             </label>
             <input
@@ -115,7 +115,7 @@ function Signup() {
 
           <div className="form-group">
             <label className="form-label">
-              <Lock size={16} style={{ display: 'inline-block', marginRight: 'var(--space-2)', verticalAlign: 'middle' }} />
+              <Lock size={16} style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }} />
               Password
             </label>
             <input
@@ -144,7 +144,7 @@ function Signup() {
             type="submit"
             className="btn btn-primary"
             disabled={loading}
-            style={{ width: '100%', marginTop: 'var(--space-6)' }}
+            style={{ width: '100%', marginTop: '24px' }}
           >
             {loading ? (
               <>
@@ -169,7 +169,7 @@ function Signup() {
             Already have an account?{' '}
             <Link to="/login">Sign in instead</Link>
           </p>
-          <p style={{ marginTop: 'var(--space-3)' }}>
+          <p style={{ marginTop: '12px' }}>
             <Link to="/">← Back to Home</Link>
           </p>
         </div>
