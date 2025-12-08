@@ -1,12 +1,10 @@
 generator client {
   provider = "prisma-client-js"
-  binaryTargets = ["native", "debian-openssl-3.0.x"] 
 }
 
 datasource db {
-  provider     = "mysql"
-  url          = env("DATABASE_URL")
-  relationMode = "prisma"  // Required for PlanetScale - handles foreign keys in Prisma instead of database
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 // ============================================
@@ -269,9 +267,6 @@ model PostComment {
   updatedAt       DateTime          @updatedAt
 }
 
-// ============================================
-// CHALLENGES - Competitive features
-// ============================================
 model Challenge {
   id              Int               @id @default(autoincrement())
   name            String
