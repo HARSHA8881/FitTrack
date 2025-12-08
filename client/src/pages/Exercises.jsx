@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Search, Filter, Plus, Video, Dumbbell } from 'lucide-react';
+import { Search, Filter, Plus, Dumbbell } from 'lucide-react';
 import api from '../api';
 
 function Exercises() {
@@ -9,6 +9,7 @@ function Exercises() {
     const [selectedType, setSelectedType] = useState('All');
     const [selectedDifficulty, setSelectedDifficulty] = useState('All');
     const [selectedMuscleGroup, setSelectedMuscleGroup] = useState('All');
+    const [selectedEquipment, setSelectedEquipment] = useState('');
     const [showForm, setShowForm] = useState(false);
     const [newExercise, setNewExercise] = useState({ name: '', category: 'Strength' });
 
@@ -40,8 +41,8 @@ function Exercises() {
         }
     };
 
-    const types = ['All', 'strength', 'mobility', 'calisthenics'];
-    const difficulties = ['All', 'advance', 'intermediate'];
+    const types = ['All', 'Strength', 'Cardio', 'Calisthenics', 'Flexibility'];
+    const difficulties = ['All', 'Beginner', 'Intermediate', 'Advanced'];
     const muscleGroups = ['All', 'Chest', 'Back', 'Legs', 'Arms', 'Shoulders', 'Core'];
 
     // Sample exercise data with images
@@ -49,8 +50,8 @@ function Exercises() {
         {
             id: 1,
             name: 'Standing Shoulder Press (Barbell)',
-            type: 'strength',
-            difficulty: 'advance',
+            type: 'Strength',
+            difficulty: 'Advanced',
             muscleGroups: ['Anterior Deltoid', 'Middle Deltoid'],
             equipment: 'barbell',
             hasVideo: true
@@ -58,28 +59,145 @@ function Exercises() {
         {
             id: 2,
             name: 'Seated Crunches (Machine)',
-            type: 'mobility',
-            difficulty: 'intermediate',
-            muscleGroups: ['Pectoralis Major, Clavicular Head', 'Rectoral...'],
-            equipment: 'other',
+            type: 'Strength',
+            difficulty: 'Intermediate',
+            muscleGroups: ['Rectus Abdominis', 'Obliques'],
+            equipment: 'machine',
             hasVideo: true
         },
         {
             id: 3,
             name: 'Bench Press',
-            type: 'strength',
-            difficulty: 'intermediate',
-            muscleGroups: ['Pectoralis Major, Sternal Head', 'Middle Deltoid'],
-            equipment: 'other',
+            type: 'Strength',
+            difficulty: 'Intermediate',
+            muscleGroups: ['Pectoralis Major', 'Triceps'],
+            equipment: 'barbell',
             hasVideo: false
+        },
+        {
+            id: 4,
+            name: 'Barbell Squat',
+            type: 'Strength',
+            difficulty: 'Advanced',
+            muscleGroups: ['Quadriceps', 'Glutes', 'Hamstrings'],
+            equipment: 'barbell',
+            hasVideo: true
+        },
+        {
+            id: 5,
+            name: 'Deadlift',
+            type: 'Strength',
+            difficulty: 'Advanced',
+            muscleGroups: ['Lower Back', 'Glutes', 'Hamstrings'],
+            equipment: 'barbell',
+            hasVideo: true
+        },
+        {
+            id: 6,
+            name: 'Pull-Ups',
+            type: 'Calisthenics',
+            difficulty: 'Intermediate',
+            muscleGroups: ['Latissimus Dorsi', 'Biceps'],
+            equipment: 'bodyweight',
+            hasVideo: true
+        },
+        {
+            id: 7,
+            name: 'Push-Ups',
+            type: 'Calisthenics',
+            difficulty: 'Intermediate',
+            muscleGroups: ['Pectoralis Major', 'Triceps', 'Shoulders'],
+            equipment: 'bodyweight',
+            hasVideo: false
+        },
+        {
+            id: 8,
+            name: 'Burpees',
+            type: 'Calisthenics',
+            difficulty: 'Advanced',
+            muscleGroups: ['Full Body'],
+            equipment: 'bodyweight',
+            hasVideo: true
+        },
+        {
+            id: 9,
+            name: 'Plank',
+            type: 'Strength',
+            difficulty: 'Intermediate',
+            muscleGroups: ['Core', 'Abs'],
+            equipment: 'bodyweight',
+            hasVideo: false
+        },
+        {
+            id: 10,
+            name: 'Dumbbell Bicep Curl',
+            type: 'Strength',
+            difficulty: 'Intermediate',
+            muscleGroups: ['Biceps'],
+            equipment: 'dumbbell',
+            hasVideo: true
+        },
+        {
+            id: 11,
+            name: 'Lat Pulldown',
+            type: 'Strength',
+            difficulty: 'Intermediate',
+            muscleGroups: ['Latissimus Dorsi', 'Upper Back'],
+            equipment: 'machine',
+            hasVideo: true
+        },
+        {
+            id: 12,
+            name: 'Leg Press',
+            type: 'Strength',
+            difficulty: 'Intermediate',
+            muscleGroups: ['Quadriceps', 'Glutes'],
+            equipment: 'machine',
+            hasVideo: false
+        },
+        {
+            id: 13,
+            name: 'Mountain Climbers',
+            type: 'Calisthenics',
+            difficulty: 'Intermediate',
+            muscleGroups: ['Core', 'Shoulders', 'Legs'],
+            equipment: 'bodyweight',
+            hasVideo: true
+        },
+        {
+            id: 14,
+            name: 'Dumbbell Chest Press',
+            type: 'Strength',
+            difficulty: 'Intermediate',
+            muscleGroups: ['Pectoralis Major', 'Triceps'],
+            equipment: 'dumbbell',
+            hasVideo: false
+        },
+        {
+            id: 15,
+            name: 'Romanian Deadlift',
+            type: 'Strength',
+            difficulty: 'Advanced',
+            muscleGroups: ['Hamstrings', 'Glutes', 'Lower Back'],
+            equipment: 'barbell',
+            hasVideo: true
+        },
+        {
+            id: 16,
+            name: 'Yoga Flow',
+            type: 'Flexibility',
+            difficulty: 'Intermediate',
+            muscleGroups: ['Full Body'],
+            equipment: 'bodyweight',
+            hasVideo: true
         },
     ];
 
     // Combine API exercises with sample data
     const allExercises = [...sampleExercises, ...exercises.map((ex, idx) => ({
         ...ex,
-        type: ex.category?.toLowerCase() || 'strength',
-        difficulty: 'intermediate',
+        type: ex.category || 'Strength',
+        difficulty: 'Intermediate',
         muscleGroups: ['General'],
         equipment: 'other',
         hasVideo: false
@@ -90,7 +208,8 @@ function Exercises() {
         const matchesSearch = exercise.name.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesType = selectedType === 'All' || exercise.type === selectedType;
         const matchesDifficulty = selectedDifficulty === 'All' || exercise.difficulty === selectedDifficulty;
-        return matchesSearch && matchesType && matchesDifficulty;
+        const matchesEquipment = !selectedEquipment || exercise.equipment?.toLowerCase().includes(selectedEquipment.toLowerCase());
+        return matchesSearch && matchesType && matchesDifficulty && matchesEquipment;
     });
 
     if (loading) {
@@ -148,6 +267,7 @@ function Exercises() {
                                     >
                                         <option value="Strength">Strength</option>
                                         <option value="Cardio">Cardio</option>
+                                        <option value="Calisthenics">Calisthenics</option>
                                         <option value="Flexibility">Flexibility</option>
                                         <option value="Other">Other</option>
                                     </select>
@@ -253,6 +373,8 @@ function Exercises() {
                             type="text"
                             className="form-input"
                             placeholder="Filter by equipment..."
+                            value={selectedEquipment}
+                            onChange={(e) => setSelectedEquipment(e.target.value)}
                             style={{ maxWidth: '300px' }}
                         />
                     </div>
@@ -287,12 +409,7 @@ function Exercises() {
                                 {exercise.difficulty && (
                                     <span className="badge badge-secondary">{exercise.difficulty}</span>
                                 )}
-                                {exercise.hasVideo && (
-                                    <span className="badge badge-success" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}>
-                                        <Video size={12} />
-                                        Video
-                                    </span>
-                                )}
+
                             </div>
 
                             {/* Muscle Groups */}
@@ -332,6 +449,7 @@ function Exercises() {
                             setSearchQuery('');
                             setSelectedType('All');
                             setSelectedDifficulty('All');
+                            setSelectedEquipment('');
                         }}>
                             Clear Filters
                         </button>

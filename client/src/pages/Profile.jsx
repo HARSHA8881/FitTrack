@@ -40,15 +40,6 @@ function Profile() {
         { label: 'Level', value: profile?.level || '1', icon: TrendingUp, color: 'secondary', bgColor: 'var(--info-light)' },
     ];
 
-    const achievements = [
-        { id: 1, name: 'First Workout', icon: Target, unlocked: true, gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)' },
-        { id: 2, name: '10 Workouts', icon: Dumbbell, unlocked: true, gradient: 'linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%)' },
-        { id: 3, name: '7 Day Streak', icon: Flame, unlocked: false, gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)' },
-        { id: 4, name: '100 Workouts', icon: Award, unlocked: false, gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)' },
-        { id: 5, name: '30 Day Streak', icon: Zap, unlocked: false, gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
-        { id: 6, name: 'Consistency', icon: Trophy, unlocked: false, gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)' },
-    ];
-
     useEffect(() => {
         fetchProfile();
         fetchGoals();
@@ -152,7 +143,7 @@ function Profile() {
                             width: '120px',
                             height: '120px',
                             borderRadius: 'var(--radius-full)',
-                            background: 'linear-gradient(135deg, var(--primary-400) 0%, var(--primary-600) 100%)',
+                            background: 'var(--primary-400)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -499,65 +490,7 @@ function Profile() {
                         </div>
                     </div>
 
-                    {/* Achievements */}
-                    <div className="card">
-                        <div className="card-header">
-                            <h3 className="card-title">Achievements</h3>
-                            <p className="card-description">2/6 unlocked</p>
-                        </div>
-                        <div className="card-body">
-                            <div className="grid grid-cols-2" style={{ gap: 'var(--space-3)' }}>
-                                {achievements.map((achievement) => (
-                                    <div key={achievement.id} style={{
-                                        position: 'relative',
-                                        aspectRatio: '1',
-                                        borderRadius: 'var(--radius-lg)',
-                                        background: achievement.gradient,
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        gap: 'var(--space-2)',
-                                        padding: 'var(--space-3)',
-                                        opacity: achievement.unlocked ? 1 : 0.4,
-                                        filter: achievement.unlocked ? 'none' : 'grayscale(100%)',
-                                        transition: 'all var(--transition-base)',
-                                        cursor: 'pointer'
-                                    }}>
-                                        <achievement.icon size={32} style={{ color: 'white' }} />
-                                        <div style={{
-                                            fontSize: 'var(--text-xs)',
-                                            fontWeight: 600,
-                                            color: 'white',
-                                            textAlign: 'center',
-                                            textShadow: '0 1px 2px rgba(0,0,0,0.2)'
-                                        }}>
-                                            {achievement.name}
-                                        </div>
-                                        {!achievement.unlocked && (
-                                            <div style={{
-                                                position: 'absolute',
-                                                top: '0',
-                                                left: '0',
-                                                right: '0',
-                                                bottom: '0',
-                                                background: 'rgba(0,0,0,0.3)',
-                                                borderRadius: 'var(--radius-lg)',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center'
-                                            }}>
-                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                    <rect x="5" y="11" width="14" height="10" rx="2" ry="2" />
-                                                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                                                </svg>
-                                            </div>
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>

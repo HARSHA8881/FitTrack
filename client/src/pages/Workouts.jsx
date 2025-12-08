@@ -151,7 +151,7 @@ function Workouts() {
                                     onChange={(e) => setFormData({ ...formData, exerciseId: e.target.value })}
                                     required
                                 >
-                                    <option value="">Select Exercise</option>
+                                    <option value="">Choose an exercise from the library</option>
                                     {exercises.map(ex => (
                                         <option key={ex.id} value={ex.id}>{ex.name} ({ex.category})</option>
                                     ))}

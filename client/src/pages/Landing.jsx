@@ -1,43 +1,25 @@
 import { Link } from 'react-router-dom';
-import { Dumbbell, TrendingUp, Target, Zap, Shield, Activity, Rocket, Hand, Heart } from 'lucide-react';
+import { TrendingUp, Target, Zap, Shield, Heart } from 'lucide-react';
 
 function Landing() {
     const features = [
         {
-            icon: <Dumbbell size={32} />,
+            icon: <Target size={32} />,
             title: 'Workout Logging',
             description: 'Log exercises with sets, reps, weight, and duration. Never forget your previous workout weights again.',
-            gradient: 'linear-gradient(135deg, var(--primary-400) 0%, var(--primary-600) 100%)'
+            gradient: '#0EA5E9'
         },
         {
             icon: <TrendingUp size={32} />,
             title: 'Progress Tracking',
             description: 'Visual charts showing strength gains, workout frequency calendar, and personal records for each exercise.',
-            gradient: 'linear-gradient(135deg, var(--secondary-400) 0%, var(--secondary-600) 100%)'
+            gradient: '#0EA5E9'
         },
         {
             icon: <Target size={32} />,
             title: 'Exercise Library',
             description: 'Predefined list of common exercises with the ability to add your own custom exercises.',
-            gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
-        },
-        {
-            icon: <Activity size={32} />,
-            title: 'Smart Analytics',
-            description: 'Get insights into your workout patterns, track your streaks, and monitor your fitness journey.',
-            gradient: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)'
-        },
-        {
-            icon: <Shield size={32} />,
-            title: 'Secure & Private',
-            description: 'Your data is encrypted and secure. JWT authentication ensures your workouts stay private.',
-            gradient: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)'
-        },
-        {
-            icon: <Zap size={32} />,
-            title: 'Lightning Fast',
-            description: 'Built with modern technologies for a smooth, responsive experience on any device.',
-            gradient: 'linear-gradient(135deg, #ec4899 0%, #db2777 100%)'
+            gradient: '#0EA5E9'
         }
     ];
 
@@ -52,20 +34,17 @@ function Landing() {
                 </div>
 
                 <div className="hero-content">
-                    {/* Logo */}
                     <div style={{
-                        width: '80px',
-                        height: '80px',
-                        background: 'rgba(255, 255, 255, 0.2)',
-                        backdropFilter: 'blur(10px)',
-                        borderRadius: 'var(--radius-2xl)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         margin: '0 auto var(--space-6)',
-                        border: '2px solid rgba(255, 255, 255, 0.3)'
+                        fontSize: '3.5rem',
+                        fontWeight: 800,
+                        color: 'white',
+                        fontFamily: 'var(--font-heading)'
                     }}>
-                        <Dumbbell size={48} style={{ color: 'white' }} />
+                        FitTrack
                     </div>
 
                     <h1 className="hero-title">
@@ -77,17 +56,17 @@ function Landing() {
                     </p>
                     <div className="hero-cta">
                         <Link to="/signup" className="btn btn-primary btn-lg" style={{ background: 'white', color: 'var(--primary-400)' }}>
-                            <Rocket size={20} /> Start Free Today
+                            Start Free Today
                         </Link>
                         <Link to="/login" className="btn btn-secondary btn-lg" style={{ background: 'rgba(255, 255, 255, 0.2)', color: 'white', border: '2px solid white' }}>
-                            <Hand size={20} /> Sign In
+                            Sign In
                         </Link>
                     </div>
                 </div>
             </section>
 
             {/* Features Section */}
-            <section style={{ padding: 'var(--space-16) var(--space-8)', background: 'var(--bg-secondary)' }}>
+            <section style={{ padding: 'var(--space-16) var(--space-8)', background: 'var(--bg-secondary)'}}>
                 <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
                     <div style={{ textAlign: 'center', marginBottom: 'var(--space-12)' }}>
                         <h2 style={{
@@ -140,9 +119,7 @@ function Landing() {
                             <div style={{
                                 fontSize: 'clamp(3rem, 6vw, 4rem)',
                                 fontWeight: 900,
-                                background: 'linear-gradient(135deg, var(--primary-400) 0%, var(--secondary-400) 100%)',
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent',
+                                color: 'var(--primary-400)',
                                 marginBottom: 'var(--space-3)'
                             }}>
                                 100%
@@ -151,7 +128,7 @@ function Landing() {
                                 Free Forever
                             </div>
                             <p style={{ color: 'var(--text-secondary)', fontSize: 'var(--text-sm)' }}>
-                                No hidden fees, no premium tiers
+                                No fees, no premium
                             </p>
                         </div>
 
@@ -159,9 +136,7 @@ function Landing() {
                             <div style={{
                                 fontSize: 'clamp(3rem, 6vw, 4rem)',
                                 fontWeight: 900,
-                                background: 'linear-gradient(135deg, var(--primary-400) 0%, var(--secondary-400) 100%)',
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent',
+                                color: 'var(--primary-400)',
                                 marginBottom: 'var(--space-3)'
                             }}>
                                 ∞
@@ -178,9 +153,7 @@ function Landing() {
                             <div style={{
                                 fontSize: 'clamp(3rem, 6vw, 4rem)',
                                 fontWeight: 900,
-                                background: 'linear-gradient(135deg, var(--primary-400) 0%, var(--secondary-400) 100%)',
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent',
+                                color: 'var(--primary-400)',
                                 marginBottom: 'var(--space-3)'
                             }}>
                                 24/7
@@ -199,7 +172,7 @@ function Landing() {
             {/* CTA Section */}
             <section style={{
                 padding: 'var(--space-16) var(--space-8)',
-                background: 'linear-gradient(135deg, var(--primary-400) 0%, var(--secondary-400) 100%)',
+                background: '#0EA5E9',
                 textAlign: 'center',
                 color: 'white'
             }}>
@@ -213,7 +186,7 @@ function Landing() {
                         Ready to Transform Your Fitness?
                     </h2>
                     <p style={{ fontSize: 'var(--text-xl)', marginBottom: 'var(--space-8)', color: 'rgba(255,255,255,0.95)' }}>
-                        Join thousands of athletes tracking their progress with FitTrack
+                        Join thousands of people tracking their progress with FitTrack
                     </p>
                     <Link
                         to="/signup"
@@ -237,22 +210,6 @@ function Landing() {
                 borderTop: '1px solid var(--border-default)',
                 textAlign: 'center'
             }}>
-                <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-                    <p style={{ color: 'var(--text-secondary)', marginBottom: 'var(--space-4)', fontSize: 'var(--text-sm)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)' }}>
-                        © 2024 FitTrack. Built with <Heart size={16} style={{ color: 'var(--error)' }} /> for fitness enthusiasts.
-                    </p>
-                    <div style={{ display: 'flex', gap: 'var(--space-6)', justifyContent: 'center', flexWrap: 'wrap' }}>
-                        <a href="#" style={{ color: 'var(--text-tertiary)', textDecoration: 'none', fontSize: 'var(--text-sm)' }}>
-                            Privacy Policy
-                        </a>
-                        <a href="#" style={{ color: 'var(--text-tertiary)', textDecoration: 'none', fontSize: 'var(--text-sm)' }}>
-                            Terms of Service
-                        </a>
-                        <a href="#" style={{ color: 'var(--text-tertiary)', textDecoration: 'none', fontSize: 'var(--text-sm)' }}>
-                            Contact
-                        </a>
-                    </div>
-                </div>
             </footer>
         </div>
     );

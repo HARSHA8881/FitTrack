@@ -43,7 +43,7 @@ function Login() {
           <div style={{
             width: '64px',
             height: '64px',
-            background: 'linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%)',
+            background: 'var(--primary)',
             borderRadius: 'var(--radius-lg)',
             display: 'flex',
             alignItems: 'center',
@@ -56,9 +56,7 @@ function Login() {
             fontFamily: 'var(--font-display)',
             fontSize: '24px',
             fontWeight: 800,
-            background: 'linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
+            color: 'var(--primary)',
             marginBottom: 0
           }}>
             FitTrack

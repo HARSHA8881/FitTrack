@@ -33,12 +33,8 @@ function Sidebar() {
 
     return (
         <div className="app-sidebar">
-            {/* Sidebar Header */}
             <div className="sidebar-header">
                 <NavLink to="/dashboard" className="sidebar-logo">
-                    <div className="sidebar-logo-icon">
-                        <Activity />
-                    </div>
                     <div className="sidebar-logo-text">
                         <span className="sidebar-logo-title">FitTrack</span>
                         <span className="sidebar-logo-subtitle">Your Fitness Hub</span>

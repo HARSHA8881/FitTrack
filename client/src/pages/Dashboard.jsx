@@ -75,7 +75,7 @@ function Dashboard() {
       change: '+12%',
       trend: 'up',
       color: 'primary',
-      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+      gradient: '#0EA5E9'
     },
     {
       icon: Calendar,
@@ -84,7 +84,7 @@ function Dashboard() {
       change: '+25%',
       trend: 'up',
       color: 'success',
-      gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
+      gradient: '#0EA5E9'
     },
     {
       icon: Award,
@@ -93,7 +93,7 @@ function Dashboard() {
       change: 'New!',
       trend: 'up',
       color: 'warning',
-      gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
+      gradient: '#0EA5E9'
     },
     {
       icon: Flame,
@@ -102,7 +102,7 @@ function Dashboard() {
       change: 'Days',
       trend: 'neutral',
       color: 'error',
-      gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+      gradient: '#0EA5E9'
     },
   ];
 
@@ -123,7 +123,7 @@ function Dashboard() {
     <div className="app-content">
       {/* Hero Section */}
       <div style={{
-        background: 'linear-gradient(135deg, var(--primary-400) 0%, var(--primary-600) 100%)',
+        background: 'var(--primary-400)',
         borderRadius: 'var(--radius-2xl)',
         padding: 'var(--space-8)',
         marginBottom: 'var(--space-8)',
@@ -164,46 +164,11 @@ function Dashboard() {
           <p style={{
             fontSize: 'var(--text-lg)',
             opacity: 0.95,
-            marginBottom: 'var(--space-6)'
+            marginBottom: 0
           }}>
             Ready to crush your fitness goals today?
           </p>
 
-          {/* Quick Actions in Hero */}
-          <div style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap' }}>
-            {quickActions.map((action, index) => (
-              <Link
-                key={index}
-                to={action.path}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 'var(--space-2)',
-                  padding: 'var(--space-3) var(--space-5)',
-                  background: 'rgba(255,255,255,0.2)',
-                  backdropFilter: 'blur(10px)',
-                  borderRadius: 'var(--radius-lg)',
-                  color: 'white',
-                  textDecoration: 'none',
-                  fontWeight: 600,
-                  fontSize: 'var(--text-sm)',
-                  transition: 'all var(--transition-base)',
-                  border: '1px solid rgba(255,255,255,0.3)'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(255,255,255,0.3)';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'rgba(255,255,255,0.2)';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                }}
-              >
-                <action.icon size={18} />
-                {action.label}
-              </Link>
-            ))}
-          </div>
         </div>
       </div>
 
@@ -302,7 +267,7 @@ function Dashboard() {
                       height: `${(day.workouts / maxWorkouts) * 100}%`,
                       minHeight: day.workouts > 0 ? '20px' : '4px',
                       background: day.workouts > 0
-                        ? 'linear-gradient(180deg, var(--primary-400) 0%, var(--primary-600) 100%)'
+                        ? 'var(--primary-400)'
                         : 'var(--bg-tertiary)',
                       borderRadius: 'var(--radius-md)',
                       transition: 'all var(--transition-base)',
@@ -448,7 +413,7 @@ function Dashboard() {
           {/* Today's Goal */}
           <div className="card" style={{
             marginBottom: 'var(--space-6)',
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            background: '#0EA5E9',
             color: 'white',
             border: 'none'
           }}>
@@ -486,92 +451,9 @@ function Dashboard() {
             </div>
           </div>
 
-          {/* Achievements Preview */}
-          <div className="card" style={{ marginBottom: 'var(--space-6)' }}>
-            <div className="card-header">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div>
-                  <h3 className="card-title">Achievements</h3>
-                  <p className="card-description">2/12 unlocked</p>
-                </div>
-                <Link to="/profile" style={{ color: 'var(--primary-400)', fontSize: 'var(--text-sm)', fontWeight: 600, textDecoration: 'none' }}>
-                  View All
-                </Link>
-              </div>
-            </div>
-            <div className="card-body">
-              <div className="grid grid-cols-2" style={{ gap: 'var(--space-3)' }}>
-                {[
-                  { icon: Target, name: 'First Workout', unlocked: true, gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)' },
-                  { icon: Dumbbell, name: '10 Workouts', unlocked: true, gradient: 'linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%)' },
-                  { icon: Flame, name: '7 Day Streak', unlocked: false, gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)' },
-                  { icon: Award, name: '100 Workouts', unlocked: false, gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)' },
-                ].map((achievement, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      aspectRatio: '1',
-                      borderRadius: 'var(--radius-lg)',
-                      background: achievement.gradient,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: 'var(--space-2)',
-                      padding: 'var(--space-3)',
-                      opacity: achievement.unlocked ? 1 : 0.4,
-                      filter: achievement.unlocked ? 'none' : 'grayscale(100%)',
-                      transition: 'all var(--transition-base)',
-                      cursor: 'pointer',
-                      position: 'relative'
-                    }}
-                    onMouseEnter={(e) => {
-                      if (achievement.unlocked) {
-                        e.currentTarget.style.transform = 'scale(1.05)';
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'scale(1)';
-                    }}
-                  >
-                    <achievement.icon size={32} style={{ color: 'white' }} />
-                    <div style={{
-                      fontSize: 'var(--text-xs)',
-                      fontWeight: 600,
-                      color: 'white',
-                      textAlign: 'center',
-                      textShadow: '0 1px 2px rgba(0,0,0,0.2)'
-                    }}>
-                      {achievement.name}
-                    </div>
-                    {!achievement.unlocked && (
-                      <div style={{
-                        position: 'absolute',
-                        top: '0',
-                        left: '0',
-                        right: '0',
-                        bottom: '0',
-                        background: 'rgba(0,0,0,0.3)',
-                        borderRadius: 'var(--radius-lg)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                      }}>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <rect x="5" y="11" width="14" height="10" rx="2" ry="2" />
-                          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                        </svg>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
           {/* Motivational Card */}
           <div className="card" style={{
-            background: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+            background: '#0EA5E9',
             border: 'none',
             color: 'white'
           }}>
