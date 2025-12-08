@@ -40,7 +40,7 @@ export const signup = async (req, res) => {
     });
 
     // Generate token
-    const token = generateToken(user.id);
+    const token = generateToken(user.id,user.name,user.email);
 
     res.status(201).json({
       message: 'User created successfully',
@@ -100,7 +100,7 @@ export const login = async (req, res) => {
     }
 
     // Generate token
-    const token = generateToken(user.id);
+    const token = generateToken(user.id,user.name,user.email);
 
     res.json({
       message: 'Login successful',
